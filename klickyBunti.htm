@@ -18,12 +18,11 @@
 		<p>
 			<label for="comment">Input, lines = table rows, words = buttons, click on button = copyToClipboard()</label>
 			<textarea class="form-control" rows="5" id="input" name="input">
-
+Input, lines = table rows, words = buttons, click on button = copyToClipboard()
             </textarea>
 			<button class="btn btn-primary" onclick="genClickies()">Generate Klickies</button> &nbsp;
-			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">How to ...</button>
-            &nbsp;
-            <button class="btn btn-danger" onclick="clearAll()">Clear input field</button> 
+			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">How to ...</button> &nbsp;
+			<button class="btn btn-danger" onclick="clearAll()">Clear input field</button>
 		</p>
 
 		<p>
@@ -54,6 +53,13 @@
 						<li>Clicking the button will copy the word to your clipboard</li>
 						<li>Enjoy and <a href="https://github.com/realaxl/klickiBunti">support the project</a></li>
 					</ul>
+					<h4>Notes</h4>
+					<ul>
+						<li>Lines will be trimmed, multiple spaces will be ignored</li>
+						<li>Unsupported: Tabs</li>
+						<li>Unsupported: quoting of ", ' etc.</li>
+					</ul>
+
 				</div>
 
 				<!-- Modal footer -->
@@ -83,6 +89,7 @@
 			const words = line.trim().split(/ +/)
 			let row = document.createElement('tr')
 			let btnClass = "btn-info"
+
 			for (let word of words) {
 				if (word.length > 0) {
 					let cell = document.createElement('td')
@@ -90,7 +97,7 @@
 					row.appendChild(cell)
 
 					btnId += 1
-					btnClass = "btn-secondary"
+					btnClass = "btn-dark"
 				}
 			}
 			table.appendChild(row)
