@@ -20,9 +20,10 @@
 			<textarea class="form-control" rows="5" id="input" name="input">
 
             </textarea>
-            <button class="btn btn-primary" onclick="genClickies()">Generate Klickies</button>
+			<button class="btn btn-primary" onclick="genClickies()">Generate Klickies</button> &nbsp;
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">How to ...</button>
             &nbsp;
-			<button class="btn btn-danger" onclick="clearAll()">Clear input field</button>
+            <button class="btn btn-danger" onclick="clearAll()">Clear input field</button> 
 		</p>
 
 		<p>
@@ -32,6 +33,37 @@
 		</p>
 	</div>
 
+
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">klickiBunti</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<ul>
+						<li>Enter text in the textarea</li>
+						<li>Generate Klickies</li>
+						<li>Each line will become a table row</li>
+						<li>Each word will become a clickable button in a table cell</li>
+						<li>Clicking the button will copy the word to your clipboard</li>
+						<li>Enjoy and <a href="https://github.com/realaxl/klickiBunti">support the project</a></li>
+					</ul>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
 
 </body>
 
@@ -82,11 +114,11 @@
 	}
 
 
-    function clearAll() {
-        for (let id of ['input']) {
-            document.getElementById(id).value = ''
-        }
-    }
+	function clearAll() {
+		for (let id of['input']) {
+			document.getElementById(id).value = ''
+		}
+	}
 
 
 	// https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
