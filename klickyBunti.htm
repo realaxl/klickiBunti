@@ -2,176 +2,182 @@
 <html lang="en">
 
 <head>
-	<title>klickiBunti / Bootstrap</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>klickiBunti / Bootstrap</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
-	<div class="container-fluid">
-		<h2>klickiBunti: textarea</h2>
-		<p>
-			<label for="comment">Input, lines = table rows, words = buttons, click on button = copyToClipboard()</label>
-			<textarea class="form-control" rows="5" id="input" name="input">
+    <div class="container-fluid">
+        <h2>klickiBunti: textarea</h2>
+        <p>
+            <label for="comment">Input, lines = table rows, words = buttons, click on button = copyToClipboard()</label>
+            <textarea class="form-control" rows="5" id="input" name="input">
 Input, lines = table rows, words = buttons, click on button = copyToClipboard()
             </textarea>
-		</p>
+        </p>
 
-		<p>
-			<button class="btn btn-primary" onclick="genClickies()">Generate Klickies</button> &nbsp;
-			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">How to ...</button> &nbsp;
-			<button class="btn btn-danger" onclick="clearAll()">Clear input field</button>
-		</p>
+        <p>
+            <button class="btn btn-primary" onclick="genClickies()">Generate Klickies</button> &nbsp;
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">How to ...</button>
+            &nbsp;
+            <button class="btn btn-danger" onclick="clearAll()">Clear input field</button>
+        </p>
 
-		<p>
-			<div id="output">
-				<table id="outputTable"></table>
-			</div>
-		</p>
-	</div>
+        <p>
+            <div id="output">
+                <table id="outputTable"></table>
+            </div>
+        </p>
+    </div>
 
 
-	<div class="modal" id="myModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">klickiBunti</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">klickiBunti</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
 
-				<!-- Modal body -->
-				<div class="modal-body">
-					<ul>
-						<li>Enter text in the textarea</li>
-						<li>Generate Klickies</li>
-						<li>Each line will become a table row</li>
-						<li>Each word will become a clickable button in a table cell</li>
-						<li>Clicking the button will copy the word to your clipboard</li>
-						<li>Enjoy and <a href="https://github.com/realaxl/klickiBunti">support the project</a></li>
-					</ul>
-					<h4>Notes</h4>
-					<ul>
-						<li>Lines will be trimmed, multiple spaces will be ignored</li>
-						<li>Unsupported: Tabs</li>
-						<li>Unsupported: quoting of ", ' etc.</li>
-					</ul>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <ul>
+                        <li>Enter text in the textarea</li>
+                        <li>Generate Klickies</li>
+                        <li>Each line will become a table row</li>
+                        <li>Each word will become a clickable button in a table cell</li>
+                        <li>Clicking the button will copy the word to your clipboard</li>
+                        <li>Enjoy and <a href="https://github.com/realaxl/klickiBunti">support the project</a></li>
+                    </ul>
+                    <h4>Notes</h4>
+                    <ul>
+                        <li>Lines will be trimmed, multiple spaces will be ignored</li>
+                        <li>Unsupported: Tabs</li>
+                        <li>Unsupported: quoting of ", ' etc.</li>
+                    </ul>
 
-				</div>
+                </div>
 
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-				</div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
 
 <script>
-	function genClickies() {
-		const input = document.getElementById('input').value
-
-		let table = document.createElement('table')
-		table.id = 'outputTable'
-		table.className = 'table table-striped'
-
-		let btnId = 0
-
-		const lines = input.split(/\r?\n/)
-		for (let line of lines) {
-			const words = line.trim().split(/ +/)
-			let row = document.createElement('tr')
-			let btnClass = "btn-info"
-
-			for (let word of words) {
-				if (word.length > 0) {
-					let cell = document.createElement('td')
-					cell.appendChild(genButton(btnId, btnClass, word))
-					row.appendChild(cell)
-
-					btnId += 1
-					btnClass = "btn-secondary"
-				}
-			}
-			table.appendChild(row)
+    let cfg = {
+        separator: " "
+    }
 
 
-			row = document.createElement('tr')
-			cell = document.createElement('td')
-			btnGroup = document.createElement('div')
-			btnGroup.className = 'btn-group'
+    function genClickies() {
+        const input = document.getElementById('input').value
 
-			btnClass = "btn-dark"
+        let table = document.createElement('table')
+        table.id = 'outputTable'
+        table.className = 'table table-striped'
 
-			for (let word of words) {
-				if (word.length > 0) {
-					btnGroup.appendChild(genButton(btnId, btnClass, word))
+        let btnId = 0
 
-					btnId += 1
-					btnClass = "btn-outline-dark"
-				}
-			}
-			cell.appendChild(btnGroup)
-			row.appendChild(cell)
-			table.appendChild(row)
+        const lines = input.split(/\r?\n/)
+        for (let line of lines) {
+            const words = line.trim().split(/ +/)
+            let row = document.createElement('tr')
+            let btnClass = "btn-info"
 
-		}
+            for (let word of words) {
+                if (word.length > 0) {
+                    let cell = document.createElement('td')
+                    cell.appendChild(genButton(btnId, btnClass, word))
+                    row.appendChild(cell)
 
-		document.getElementById('outputTable').replaceWith(table)
-	}
-
-
-	function genButton(btnId, btnClass, label) {
-		let button = document.createElement('button')
-		let btnLabel = "btn_" + (btnId).pad(8)
-
-		button.id = btnLabel
-		button.className = `btn ${btnClass} btn`
-		button.textContent = label
-		button.setAttribute('onclick', `copyToClipboard("${label}")`)
-
-		return button
-	}
+                    btnId += 1
+                    btnClass = "btn-secondary"
+                }
+            }
+            table.appendChild(row)
 
 
-	function clearAll() {
-		for (let id of['input']) {
-			document.getElementById(id).value = ''
-		}
-	}
+            row = document.createElement('tr')
+            cell = document.createElement('td')
+            btnGroup = document.createElement('div')
+            btnGroup.className = 'btn-group'
+
+            btnClass = "btn-dark"
+
+            for (let word of words) {
+                if (word.length > 0) {
+                    btnGroup.appendChild(genButton(btnId, btnClass, word))
+
+                    btnId += 1
+                    btnClass = "btn-outline-dark"
+                }
+            }
+            cell.appendChild(btnGroup)
+            row.appendChild(cell)
+            table.appendChild(row)
+
+        }
+
+        document.getElementById('outputTable').replaceWith(table)
+    }
 
 
-	// https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
-	const copyToClipboard = str => {
-		const el = document.createElement('textarea');
-		el.value = str;
-		el.setAttribute('readonly', '');
-		el.style.position = 'absolute';
-		el.style.left = '-9999px';
-		document.body.appendChild(el);
-		el.select();
-		document.execCommand('copy');
-		document.body.removeChild(el);
-	};
+    function genButton(btnId, btnClass, label) {
+        let button = document.createElement('button')
+        let btnLabel = "btn_" + (btnId).pad(8)
+
+        button.id = btnLabel
+        button.className = `btn ${btnClass} btn`
+        button.textContent = label
+        button.setAttribute('onclick', `copyToClipboard("${label}")`)
+
+        return button
+    }
 
 
-	Number.prototype.pad = function(size) {
-		var s = String(this);
-		while (s.length < (size || 2)) {
-			s = "0" + s;
-		}
-		return s;
-	}
+    function clearAll() {
+        for (let id of ['input']) {
+            document.getElementById(id).value = ''
+        }
+    }
+
+
+    // https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
+    const copyToClipboard = str => {
+        const el = document.createElement('textarea');
+        el.value = str;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    };
+
+
+    Number.prototype.pad = function (size) {
+        var s = String(this);
+        while (s.length < (size || 2)) {
+            s = "0" + s;
+        }
+        return s;
+    }
 </script>
 
 </html>
