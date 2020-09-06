@@ -100,9 +100,29 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
 					row.appendChild(cell)
 
 					btnId += 1
-					btnClass = "btn-dark"
+					btnClass = "btn-secondary"
 				}
 			}
+			table.appendChild(row)
+
+
+			row = document.createElement('tr')
+			cell = document.createElement('td')
+			btnGroup = document.createElement('div')
+			btnGroup.className = 'btn-group'
+
+			btnClass = "btn-dark"
+
+			for (let word of words) {
+				if (word.length > 0) {
+					btnGroup.appendChild(genButton(btnId, btnClass, word))
+
+					btnId += 1
+					btnClass = "btn-outline-dark"
+				}
+			}
+			cell.appendChild(btnGroup)
+			row.appendChild(cell)
 			table.appendChild(row)
 
 		}
