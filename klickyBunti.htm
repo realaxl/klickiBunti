@@ -25,7 +25,8 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
         <p>
             <button class="btn btn-primary" onclick="genClickies('grid')">Grid Matrix</button> &nbsp;
             <button class="btn btn-primary" onclick="genClickies()">Flow Text</button> &nbsp;
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#howToModal">How to ...</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#howToModal">How to
+                ...</button>
             &nbsp;
             <button class="btn btn-danger" onclick="clearAll()">Clear input field</button>
         </p>
@@ -54,7 +55,11 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
                         <li>Enter text in the textarea</li>
                         <li>Generate Klickies</li>
                         <li>Each line will become a table row</li>
-                        <li>Each word will become a clickable button in a table cell</li>
+                        <li>Each word will become a clickable button:</li>
+                        <ul>
+                            <li><kbd>Grid Matrix</kbd> &mdash; in a table cell</li>
+                            <li><kbd>Flow Text</kbd> &mdash; in a button group</li>
+                        </ul>
                         <li>Clicking the button will copy the word to your clipboard</li>
                         <li>Enjoy and <a href="https://github.com/realaxl/klickiBunti">support the project</a></li>
                     </ul>
@@ -90,8 +95,9 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
 
         let table = document.createElement('table')
         table.id = 'outputTable'
-        table.className = 'table table-striped'
+        table.className = 'table'
 
+        let tbody = document.createElement('tbody')
         let btnId = 0
 
         const lines = input.split(/\r?\n/)
@@ -108,9 +114,10 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
                     break;
 
             }
-            table.appendChild(row)
+            tbody.appendChild(row)
 
         }
+        table.appendChild(tbody)
 
         document.getElementById('outputTable').replaceWith(table)
     }
@@ -124,7 +131,7 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
                 let cell = document.createElement('td')
                 cell.appendChild(genButton(btnClass, word))
                 row.appendChild(cell)
-                
+
                 // btnId += 1
                 btnClass = "btn-secondary"
             }
@@ -132,7 +139,7 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
         return row
     }
 
-    
+
     function genFlowText(words) {
         let row = document.createElement('tr')
         let cell = document.createElement('td')
