@@ -23,9 +23,9 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
         </p>
 
         <p>
-            <button class="btn btn-primary" onclick="genClickies('grid')">Grid Klickies</button> &nbsp;
-            <button class="btn btn-primary" onclick="genClickies()">Flow Klickies</button> &nbsp;
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">How to ...</button>
+            <button class="btn btn-primary" onclick="genClickies('grid')">Grid Matrix</button> &nbsp;
+            <button class="btn btn-primary" onclick="genClickies()">Flow Text</button> &nbsp;
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#howToModal">How to ...</button>
             &nbsp;
             <button class="btn btn-danger" onclick="clearAll()">Clear input field</button>
         </p>
@@ -38,7 +38,7 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
     </div>
 
 
-    <div class="modal" id="myModal">
+    <div class="modal fade" id="howToModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -139,7 +139,7 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
         let btnGroup = document.createElement('div')
         btnGroup.className = 'btn-group'
 
-        let btnClass = "btn-dark"
+        let btnClass = "btn-info"
 
         for (let word of words) {
             if (word.length > 0) {
@@ -171,6 +171,7 @@ Input, lines = table rows, words = buttons, click on button = copyToClipboard()
         for (let id of ['input']) {
             document.getElementById(id).value = ''
         }
+        document.getElementById('input').focus()
     }
 
 
